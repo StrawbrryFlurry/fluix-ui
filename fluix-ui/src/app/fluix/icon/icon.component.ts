@@ -1,5 +1,7 @@
 import { BooleanInput } from '@angular/cdk/coercion';
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
+
+import { FxTypeDirective } from '../common/directives';
 
 @Component({
   selector: 'fx-icon',
@@ -16,7 +18,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } 
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class FxIconComponent implements OnInit {
+export class FxIconComponent implements OnInit, OnChanges {
   @Input()
   get disabled(): boolean {
     return this._disabled;
@@ -35,9 +37,28 @@ export class FxIconComponent implements OnInit {
   }
   private _selectable: boolean = false;
 
-  constructor() {}
+  constructor(
+    private readonly elementRef: ElementRef<HTMLParagraphElement>,
+    private readonly typeRef: FxTypeDirective<HTMLParagraphElement>
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.applyTypeFromParent();
+  }
+
+  ngOnChanges(): void {
+    this.applyTypeFromParent();
+  }
+  /**
+   * If the icon is a child of a button or an other element
+   * which has a type defined  we need to get the type from that
+   * parent.
+   */
+  applyTypeFromParent() {
+    if (this.typeRef.matchElementRef(this.elementRef)) {
+      this.typeRef.setColorClass(this.elementRef);
+    }
+  }
 
   ngAcceptInputType_disabled: BooleanInput;
 }

@@ -5,8 +5,6 @@
 @use "../style/ripples";
 @use "../utils";
 
-@use '~@angular/material' as mat;
-
 $primary: #f00044 !default;
 $accent: #007df0 !default;
 $warn: #d13438 !default;
@@ -15,7 +13,7 @@ $success: #4caf50 !default;
 $surface: #0c0e13 !default;
 
 $text-on-surface: #fff !default;
-$text-on-primary: #000 !default;
+$text-on-primary: #fff !default;
 
 $default-typography: typography.define-typography();
 
@@ -127,5 +125,5 @@ $default-theme-config: (
   @include elevation.apply-background-elevation-classes($theme);
   @include elevation.apply-text-elevation-classes($theme);
   @include typography.apply-typography-classes($theme);
-  @include ripples.apply-ripple-color($theme);
+  @include ripples.apply-theme($theme);
 }

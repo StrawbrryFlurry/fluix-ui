@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input, Vie
 const BUTTON_ATTRIBUTES = ['fxButton', 'fxIconButton', 'fxSelectButton'];
 
 @Component({
-  selector: 'button[fxButton], button[fxIconButton], button[fxLinkButton]',
+  selector: 'button[fxButton], button[fxIconButton], button[fxActionButton]',
   template: `<span class="fx-button-wrapper"><ng-content></ng-content></span>
     <span
       matRipple
@@ -47,9 +47,9 @@ export class FxButtonComponent {
     return this.hasAttribute('fxButton');
   }
 
-  @HostBinding('class.fx-link-button')
+  @HostBinding('class.fx-action-button')
   get isLinkButton() {
-    return this.hasAttribute('fxLinkButton');
+    return this.hasAttribute('fxActionButton');
   }
 
   @HostBinding('class.fx-icon-button')

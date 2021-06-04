@@ -1,5 +1,4 @@
 @use "./app/fluix/fluix-theme" as fx;
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
 
 $fx-theme: fx.define-theme();
 
@@ -18,9 +17,6 @@ html {
 
 html,
 body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  height: 100vh;
+  width: 100vw;
 }

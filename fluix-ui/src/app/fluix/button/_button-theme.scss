@@ -1,5 +1,7 @@
 @use "../core/theming/theming";
 @use "../core/typography/typography";
+@use "../core/style/ripples";
+@use "../core/style/style-types";
 @use "button-base";
 
 @mixin color($theme) {
@@ -9,6 +11,8 @@
   $on-surface: theming.get-from-nested-palette($text-palettes, on-surface);
   $on-primary: theming.get-from-nested-palette($text-palettes, on-primary);
 
+  $foreground: theming.get-foreground-color($theme);
+
   $primary: theming.get-from-nested-palette($color-palettes, primary);
   $accent: theming.get-from-nested-palette($color-palettes, accent);
 
@@ -16,7 +20,7 @@
   $warn: theming.get-from-nested-palette($color-palettes, warn);
 
   .fx-icon-button,
-  .fx-link-button {
+  .fx-action-button {
     &.fx-primary {
       color: $primary;
     }
@@ -58,12 +62,16 @@
     &.fx-warn {
       background-color: $warn;
     }
+
+    @include style-types.for-each-style-type-within() using ($type) {
+      @include ripples.apply-ripple-color($foreground);
+    }
   }
 }
 
 @mixin typography($theme) {
   .fx-button,
-  .fx-link-button {
+  .fx-action-button {
     @include typography.apply-typography-level-from-theme($theme, button);
   }
 }
@@ -77,7 +85,7 @@
     @include button-base.icon-button();
   }
 
-  .fx-link-button {
+  .fx-action-button {
     @include button-base.link-button();
   }
 }

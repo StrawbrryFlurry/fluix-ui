@@ -2,11 +2,13 @@
 @use "../theming/theming";
 @use "../style/style-types";
 
+@use '~@angular/material' as mat;
+
 $ripple-color-opacity: 0.1;
 $selector-prefix: "fx";
 
 /* Colors for the ripple elements.*/
-@mixin apply-ripple-color($theme) {
+@mixin apply-theme-ripple-colors($theme) {
   $colors: theming.get-type-color-map($theme);
 
   @include style-types.for-each-style-type($selector-prefix) using ($type) {
@@ -16,4 +18,15 @@ $selector-prefix: "fx";
       background-color: rgba($color, $ripple-color-opacity);
     }
   }
+}
+
+@mixin apply-ripple-color($color) {
+  .mat-ripple-element {
+    background-color: rgba($color, $ripple-color-opacity);
+  }
+}
+
+@mixin apply-theme($theme) {
+  @include mat.ripple();
+  @include apply-theme-ripple-colors($theme);
 }

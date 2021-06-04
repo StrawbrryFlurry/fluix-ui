@@ -59,9 +59,30 @@
   @return map.get($palette, elevation);
 }
 
+@function get-from-theme-palette(
+  $theme,
+  $palette-group,
+  $palette,
+  $level: default
+) {
+  $palettes: map.get($theme, palette);
+  $palette-group: map.get($palettes, $palette-group);
+  $palette-config: map.get($palette-group, $palette);
+
+  @return map.get($palette-config, $level);
+}
+
 @function get-from-nested-palette($palettes, $palette, $level: default) {
   $palette-config: map.get($palettes, $palette);
   @return map.get($palette-config, $level);
+}
+
+@function get-foreground-color($theme) {
+  @return get-from-theme-palette($theme, text, on-primary, high);
+}
+
+@function get-background-color($theme) {
+  @return get-from-theme-palette($theme, text, on-surface, high);
 }
 
 @function get-color-from-palette($palette, $level: default) {
