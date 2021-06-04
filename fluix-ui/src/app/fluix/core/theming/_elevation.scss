@@ -1,0 +1,131 @@
+@use "sass:map";
+
+$background-elevation-levels: (
+  "default": 0%,
+  "surface": 0%,
+  "1": 5%,
+  "2": 7%,
+  "3": 8%,
+  "4": 9%,
+  "5": 11%,
+  "6": 12%,
+  "7": 14%,
+  "8": 15%,
+  "9": 16%,
+);
+
+$shadow-elevation-level: (
+  "default": (
+    0px 4px 4px rgba(0, 0, 0, 0.25),
+  ),
+  "surface": (
+    0px 4px 4px rgba(0, 0, 0, 0.25),
+  ),
+  "1": (
+    0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.12),
+    0px 1px 3px rgba(0, 0, 0, 0.2),
+  ),
+  "2": (
+    0px 4px 4px rgba(0, 0, 0, 0.25),
+    0px 2px 2px rgba(0, 0, 0, 0.14),
+    0px 3px 1px rgba(0, 0, 0, 0.12),
+    0px 1px 5px rgba(0, 0, 0, 0.2),
+  ),
+  "3": (
+    0px 3px 4px rgba(0, 0, 0, 0.14),
+    0px 3px 3px rgba(0, 0, 0, 0.12),
+    0px 1px 8px rgba(0, 0, 0, 0.2),
+  ),
+  "4": (
+    0px 4px 5px rgba(0, 0, 0, 0.14),
+    0px 1px 10px rgba(0, 0, 0, 0.12),
+    0px 2px 4px rgba(0, 0, 0, 0.2),
+  ),
+  "5": (
+    0px 6px 10px rgba(0, 0, 0, 0.14),
+    0px 1px 18px rgba(0, 0, 0, 0.12),
+    0px 3px 5px rgba(0, 0, 0, 0.2),
+  ),
+  "6": (
+    0px 8px 10px rgba(0, 0, 0, 0.14),
+    0px 3px 14px rgba(0, 0, 0, 0.12),
+    0px 5px 5px rgba(0, 0, 0, 0.2),
+  ),
+  "7": (
+    0px 12px 17px rgba(0, 0, 0, 0.14),
+    0px 5px 22px rgba(0, 0, 0, 0.12),
+    0px 7px 8px rgba(0, 0, 0, 0.2),
+  ),
+  "8": (
+    0px 16px 24px rgba(0, 0, 0, 0.14),
+    0px 6px 30px rgba(0, 0, 0, 0.12),
+    0px 8px 10px rgba(0, 0, 0, 0.2),
+  ),
+  "9": (
+    0px 24px 38px rgba(0, 0, 0, 0.14),
+    0px 9px 46px rgba(0, 0, 0, 0.12),
+    0px 11px 15px rgba(0, 0, 0, 0.2),
+  ),
+);
+
+$overlay: #fff;
+
+// Generate background elevation levels
+// for a surface color
+@function generate-elevation-levels($surface) {
+  $levels: ();
+
+  @each $level, $opacity in $background-elevation-levels {
+    $elevation: mix($overlay, $surface, $opacity);
+    $levels: map.merge($levels, (#{$level}: $elevation));
+  }
+
+  @return $levels;
+}
+
+// Apply background elevation to a container
+@mixin background-elevation($theme, $level: default) {
+  $palette: map.get($theme, palette);
+  $elevation: map.get($palette, elevation);
+
+  background-color: map.get($elevation, $level);
+  box-shadow: map.get($shadow-elevation-level, $level);
+}
+
+// Creating global background elevation classes
+@mixin apply-background-elevation-classes($theme) {
+  $palette: map.get($theme, palette);
+  $elevation: map.get($palette, elevation);
+
+  @each $level, $percent in $elevation {
+    .fx-elevation-#{$level} {
+      @include background-elevation($theme, $level);
+    }
+  }
+}
+
+// Creating global text elevation classes
+@mixin apply-text-elevation-classes($theme) {
+  $text-config: map.get($theme, text);
+  $palette: map.get($theme, palette);
+
+  $on-surface-color: map.get($text-config, on-surface);
+  $on-primary-color: map.get($text-config, on-primary);
+
+  $text-palette: map.get($palette, text);
+  $on-surface-palette: map.get($text-palette, on-surface);
+  $on-primary-palette: map.get($text-palette, on-primary);
+
+  @each $level, $color in $on-primary-palette {
+    .fx-on-primary-#{$level} {
+      color: $color;
+    }
+  }
+
+  @each $level, $color in $on-surface-palette {
+    .fx-on-surface-#{$level} {
+      color: $color;
+    }
+  }
+}

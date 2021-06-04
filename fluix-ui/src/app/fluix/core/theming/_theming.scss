@@ -1,0 +1,69 @@
+// General tools to get theming information
+// from a theme config.
+@use "sass:map";
+
+@function get-config($theme) {
+  $palette: map.get($theme, palette);
+  $config: ();
+
+  @each $section, $section-config in $palette {
+    $config: map.merge($config, $section-config);
+  }
+
+  @return $config;
+}
+
+@function get-color($theme) {
+  $palette: map.get($theme, palette);
+  @return map.get($palette, color);
+}
+
+// Returns a map with the default
+// colors for each type e.g. fx-primary, fx-basic
+@function get-type-color-map($theme) {
+  $palette: map.get($theme, palette);
+  $color-palettes: map.get($palette, color);
+  $text-palettes: map.get($palette, text);
+
+  $primary: get-from-nested-palette($color-palettes, primary);
+  $accent: get-from-nested-palette($color-palettes, accent);
+  $success: get-from-nested-palette($color-palettes, success);
+  $warn: get-from-nested-palette($color-palettes, warn);
+  $basic: get-from-nested-palette($text-palettes, on-surface, high);
+
+  @return (
+    primary: $primary,
+    accent: $accent,
+    success: $success,
+    warn: $warn,
+    basic: $basic
+  );
+}
+
+@function get-text($theme) {
+  $palette: map.get($theme, palette);
+  @return map.get($palette, text);
+}
+
+@function get-typography($theme) {
+  @return map.get($theme, typography);
+}
+
+@function get-typography-level($theme, $level) {
+  $typography: map.get($theme, typography);
+  @return map.get($typography, $level);
+}
+
+@function get-elevation($theme) {
+  $palette: map.get($theme, palette);
+  @return map.get($palette, elevation);
+}
+
+@function get-from-nested-palette($palettes, $palette, $level: default) {
+  $palette-config: map.get($palettes, $palette);
+  @return map.get($palette-config, $level);
+}
+
+@function get-color-from-palette($palette, $level: default) {
+  @return map.get($palette, $level);
+}

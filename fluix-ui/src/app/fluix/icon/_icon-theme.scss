@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "../core/theming/theming";
+
+@mixin color($theme) {
+  $text-palettes: theming.get-text($theme);
+  $color-palettes: theming.get-color($theme);
+
+  $on-surface: theming.get-from-nested-palette($text-palettes, on-surface);
+  $on-primary: theming.get-from-nested-palette($text-palettes, on-primary);
+
+  $primary: theming.get-from-nested-palette($color-palettes, primary);
+  $accent: theming.get-from-nested-palette($color-palettes, accent);
+
+  $success: theming.get-from-nested-palette($color-palettes, success);
+  $warn: theming.get-from-nested-palette($color-palettes, warn);
+
+  .fx-icon {
+    color: $on-surface;
+
+    &.fx-primary {
+      color: $primary;
+    }
+
+    &.fx-accent {
+      color: $accent;
+    }
+
+    &.fx-basic {
+      color: $on-surface;
+    }
+
+    &.fx-success {
+      color: $success;
+    }
+
+    &.fx-warn {
+      color: $warn;
+    }
+  }
+}
+
+@mixin theme($theme) {
+  @include color($theme);
+}

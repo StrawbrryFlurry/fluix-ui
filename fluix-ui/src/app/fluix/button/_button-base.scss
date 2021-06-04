@@ -1,0 +1,38 @@
+$button-border-radius: 2px;
+$button-side-padding: 24px;
+$button-top-padding: 8px;
+$button-min-width: 4rem;
+
+$icon-border-radius: 50%;
+$icon-width: 2rem;
+
+.fx-button,
+.fx-link-button,
+.fx-icon-button {
+  position: relative;
+}
+
+@mixin base() {
+  border-radius: $button-border-radius;
+  padding: $button-top-padding $button-side-padding;
+  outline: none;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin icon-button() {
+  @include base();
+
+  border-radius: $icon-border-radius;
+  width: $icon-width;
+  background-color: transparent;
+}
+
+@mixin link-button() {
+  @include base();
+
+  background-color: transparent;
+}

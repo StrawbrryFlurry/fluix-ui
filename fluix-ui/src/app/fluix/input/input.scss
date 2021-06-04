@@ -1,0 +1,39 @@
+@use "../core/styles" as *;
+
+$INPUT_WIDTH: 300px;
+$INPUT_HEIGHT: 48px;
+$INPUT_BORDER_RADIUS: 2px;
+
+.fx-input {
+  color: $TEXT_92;
+  @include fx-typography-style("medium", 400);
+
+  background-color: transparent;
+  border: none;
+  height: $INPUT_HEIGHT;
+  width: $INPUT_WIDTH;
+
+  outline: none;
+
+  .fx-input-outline {
+    border-width: line-stroke("standard");
+    border-radius: $INPUT_BORDER_RADIUS;
+    border-color: $GREY_16;
+    border-style: solid;
+  }
+
+  &:focus-within,
+  &:focus {
+    border-width: line-stroke("focus");
+    border-color: $COLOR_PRIMARY;
+  }
+
+  &:hover {
+    border-width: line-stroke("hover");
+  }
+
+  .fx-disabled {
+    border-width: line-stroke("disabled");
+    border-color: $GREY_16;
+  }
+}

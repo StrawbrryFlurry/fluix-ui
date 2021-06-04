@@ -1,0 +1,89 @@
+@use "../core/theming/theming";
+@use "../core/typography/typography";
+@use "button-base";
+
+@mixin color($theme) {
+  $text-palettes: theming.get-text($theme);
+  $color-palettes: theming.get-color($theme);
+
+  $on-surface: theming.get-from-nested-palette($text-palettes, on-surface);
+  $on-primary: theming.get-from-nested-palette($text-palettes, on-primary);
+
+  $primary: theming.get-from-nested-palette($color-palettes, primary);
+  $accent: theming.get-from-nested-palette($color-palettes, accent);
+
+  $success: theming.get-from-nested-palette($color-palettes, success);
+  $warn: theming.get-from-nested-palette($color-palettes, warn);
+
+  .fx-icon-button,
+  .fx-link-button {
+    &.fx-primary {
+      color: $primary;
+    }
+
+    &.fx-accent {
+      color: $accent;
+    }
+
+    &.fx-basic {
+      color: $on-surface;
+    }
+
+    &.fx-success {
+      color: $success;
+    }
+
+    &.fx-warn {
+      color: $warn;
+    }
+  }
+
+  .fx-button {
+    &.fx-primary {
+      background-color: $primary;
+    }
+
+    &.fx-accent {
+      background-color: $accent;
+    }
+
+    &.fx-basic {
+      background-color: transparent;
+    }
+
+    &.fx-success {
+      background-color: $success;
+    }
+
+    &.fx-warn {
+      background-color: $warn;
+    }
+  }
+}
+
+@mixin typography($theme) {
+  .fx-button,
+  .fx-link-button {
+    @include typography.apply-typography-level-from-theme($theme, button);
+  }
+}
+
+@mixin style() {
+  .fx-button {
+    @include button-base.base();
+  }
+
+  .fx-icon-button {
+    @include button-base.icon-button();
+  }
+
+  .fx-link-button {
+    @include button-base.link-button();
+  }
+}
+
+@mixin theme($theme) {
+  @include style();
+  @include color($theme);
+  @include typography($theme);
+}

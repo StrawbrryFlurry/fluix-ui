@@ -1,0 +1,26 @@
+@use "./app/fluix/fluix-theme" as fx;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+$fx-theme: fx.define-theme();
+
+@include fx.apply-theme($fx-theme);
+@include fx.apply-all-component-themes($fx-theme);
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: fx.$surface;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

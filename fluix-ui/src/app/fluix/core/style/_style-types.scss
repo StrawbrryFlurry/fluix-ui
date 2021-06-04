@@ -1,0 +1,11 @@
+@use "sass:map";
+
+$style-types: ("primary", "accent", "warn", "success", "basic");
+
+@mixin for-each-style-type($selector-prefix) {
+  @each $type in $style-types {
+    #{$selector-prefix}-#{$type} {
+      @content ($type);
+    }
+  }
+}

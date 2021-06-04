@@ -1,0 +1,131 @@
+@use "sass:map";
+@use "palette";
+@use "elevation";
+@use "../typography/typography";
+@use "../style/ripples";
+@use "../utils";
+
+@use '~@angular/material' as mat;
+
+$primary: #f00044 !default;
+$accent: #007df0 !default;
+$warn: #d13438 !default;
+$success: #4caf50 !default;
+
+$surface: #0c0e13 !default;
+
+$text-on-surface: #fff !default;
+$text-on-primary: #000 !default;
+
+$default-typography: typography.define-typography();
+
+$default-theme-config: (
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+    success: $success,
+  ),
+  text: (
+    on-surface: $text-on-surface,
+    on-primary: $text-on-primary,
+  ),
+  elevation: (
+    surface: $surface,
+  ),
+  palette: (
+    color: (
+      primary: palette.generate-theme-palette($primary),
+      accent: palette.generate-theme-palette($accent),
+      warn: palette.generate-status-palette($warn),
+      success: palette.generate-status-palette($success),
+    ),
+    text: (
+      on-primary: palette.generate-on-primary-palette($text-on-primary),
+      on-surface: palette.generate-on-surface-palette($text-on-surface),
+    ),
+    elevation: elevation.generate-elevation-levels($surface),
+  ),
+  typography: $default-typography,
+);
+
+@function define-theme($theme-config: null) {
+  @if (not $theme-config) {
+    @return $default-theme-config;
+  }
+
+  $colors: map.get($theme-config, color);
+  $primary: utils.value-or-default($colors, primary, $primary);
+  $accent: utils.value-or-default($colors, accent, $accent);
+  $warn: utils.value-or-default($colors, warn, $warn);
+  $success: utils.value-or-default($colors, success, $success);
+
+  $elevation: map.get($theme-config, elevation);
+  $surface-color: utils.value-or-default($elevation, surface, $surface);
+
+  $text: map.get($theme-config, text);
+  $text-on-primary: utils.value-or-default($text, on-primary, $text-on-primary);
+  $text-on-surface: utils.value-or-default($text, on-surface, $text-on-surface);
+
+  $primary-palette: palette.generate-theme-palette($primary);
+  $accent-palette: palette.generate-theme-palette($accent);
+
+  $warn-palette: palette.generate-status-palette($warn);
+  $success-palette: palette.generate-status-palette($success);
+
+  $text-on-primary-palette: palette.generate-on-primary-palette(
+    $text-on-primary
+  );
+  $text-on-surface-palette: palette.generate-on-surface-palette(
+    $text-on-surface
+  );
+
+  $typography: utils.value-or-default(
+    $theme-config,
+    typography,
+    $default-typography
+  );
+
+  $background-elevation: elevation.generate-elevation-levels($surface-color);
+
+  $theme: (
+    color: (
+      primary: $primary,
+      accent: $accent,
+    ),
+    status: (
+      warn: $warn,
+      success: $success,
+    ),
+    text: (
+      on-surface: $text-on-surface,
+      on-primary: $text-on-primary,
+    ),
+    elevation: (
+      surface: $surface-color,
+    ),
+    palette: (
+      color: (
+        primary: $primary-palette,
+        accent: $accent-palette,
+        warn: $warn-palette,
+        success: $success-palette,
+      ),
+      text: (
+        on-primary: $text-on-primary-palette,
+        on-surface: $text-on-surface-palette,
+      ),
+      elevation: $background-elevation,
+    ),
+    typography: $typography,
+  );
+
+  @return $theme;
+}
+
+@mixin apply-theme($theme: $default-theme-config) {
+  @include elevation.apply-background-elevation-classes($theme);
+  @include elevation.apply-text-elevation-classes($theme);
+  @include typography.apply-typography-classes($theme);
+  @include ripples.apply-ripple-color($theme);
+}

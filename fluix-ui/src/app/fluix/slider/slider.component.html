@@ -1,0 +1,19 @@
+<div class="fx-slider-wrapper" #sliderWrapper>
+  <div class="fx-slider-track-wrapper">
+    <div
+      class="fx-slider-track-background"
+      [ngStyle]="_getTrackBackgroundStyles()"
+    ></div>
+    <div class="fx-slider-track-fill" [ngStyle]="_getTrackFillStyles()"></div>
+  </div>
+  <div class="fx-slider-ticks-container" [ngStyle]="_getTicksContainerStyles()">
+    <div class="fx-slider-ticks" [ngStyle]="_getTicksStyles()"></div>
+  </div>
+  <div class="fx-slider-thumb-container" [ngStyle]="_getThumbContainerStyles()">
+    <div class="fx-slider-focus-ring"></div>
+    <div class="fx-slider-thumb"></div>
+    <div class="fx-slider-thumb-label">
+      <span class="fx-slider-thumb-label-text">{{ displayValue }}</span>
+    </div>
+  </div>
+</div>

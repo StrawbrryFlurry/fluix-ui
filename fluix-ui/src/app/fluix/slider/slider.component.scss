@@ -1,0 +1,582 @@
+@use "../core/styles" as *;
+@use "../core/styles/variables";
+@use "../core/styles/vendor-prefixes";
+
+// This refers to the thickness of the slider. On a horizontal slider this is the height, on a
+// vertical slider this is the width.
+$thickness: 48px !default;
+$min-size: 128px !default;
+$padding: 8px !default;
+
+$track-thickness: 2px !default;
+$thumb-size: 20px !default;
+$thumb-border-width: 3px !default;
+$thumb-border-width-active: 2px !default;
+$thumb-border-width-disabled: 4px !default;
+
+$thumb-default-scale: 0.7 !default;
+$thumb-focus-scale: 1 !default;
+$thumb-disabled-scale: 0.5 !default;
+
+$thumb-arrow-gap: 12px !default;
+
+$thumb-label-size: 28px !default;
+
+$tick-size: 2px !default;
+
+$focus-ring-size: 30px !default;
+
+.fx-slider {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  padding: $padding;
+  outline: none;
+  vertical-align: middle;
+
+  &:not(.fx-slider-disabled):active,
+  &.fx-slider-sliding:not(.fx-slider-disabled) {
+    @include vendor-prefixes.cursor-grabbing;
+  }
+}
+
+.fx-slider-wrapper {
+  position: absolute;
+
+  // force browser to show background-color when using the print function
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+}
+
+.fx-slider-track-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.fx-slider-track-fill {
+  position: absolute;
+  transform-origin: 0 0;
+  transition: transform variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    background-color variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function;
+}
+
+.fx-slider-track-background {
+  position: absolute;
+  transform-origin: 100% 100%;
+  transition: transform variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    background-color variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function;
+}
+
+.fx-slider-ticks-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.fx-slider-ticks {
+  background-repeat: repeat;
+  background-clip: content-box;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity variables.$swift-ease-out-duration
+    variables.$swift-ease-out-timing-function;
+}
+
+.fx-slider-thumb-container {
+  position: absolute;
+  z-index: 1;
+  transition: transform variables.$swift-ease-out-duration
+    variables.$swift-ease-out-timing-function;
+}
+
+.fx-slider-focus-ring {
+  position: absolute;
+  width: $focus-ring-size;
+  height: $focus-ring-size;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  transition: transform variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    background-color variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    opacity variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function;
+
+  .fx-slider.cdk-keyboard-focused &,
+  .fx-slider.cdk-program-focused & {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+%_fx-slider-cursor {
+  .fx-slider:not(.fx-slider-disabled):not(.fx-slider-sliding) & {
+    @include vendor-prefixes.cursor-grab;
+  }
+}
+
+.fx-slider-thumb {
+  @extend %_fx-slider-cursor;
+
+  position: absolute;
+  right: -$thumb-size / 2;
+  bottom: -$thumb-size / 2;
+  box-sizing: border-box;
+  width: $thumb-size;
+  height: $thumb-size;
+  border: $thumb-border-width solid transparent;
+  border-radius: 50%;
+  transform: scale($thumb-default-scale);
+  transition: transform variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    background-color variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    border-color variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function;
+}
+
+.fx-slider-thumb-label {
+  @extend %_fx-slider-cursor;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: $thumb-label-size;
+  height: $thumb-label-size;
+  border-radius: 50%;
+  transition: transform variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    border-radius variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function,
+    background-color variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function;
+}
+
+.fx-slider-thumb-label-text {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity variables.$swift-ease-out-duration
+    variables.$swift-ease-out-timing-function;
+}
+
+// Slider sliding state.
+.fx-slider-sliding {
+  .fx-slider-track-fill,
+  .fx-slider-track-background,
+  .fx-slider-thumb-container {
+    // Must use `transition-duration: 0ms` to disable anifxion rather than `transition: none`.
+    // On Mobile Safari `transition: none` causes the slider thumb to appear stuck.
+    transition-duration: 0ms;
+  }
+}
+
+// Slider with ticks when not disabled.
+.fx-slider-has-ticks {
+  .fx-slider-wrapper::after {
+    content: "";
+    position: absolute;
+    border-width: 0;
+    border-style: solid;
+    opacity: 0;
+    transition: opacity variables.$swift-ease-out-duration
+      variables.$swift-ease-out-timing-function;
+  }
+
+  &.cdk-focused,
+  &:hover {
+    &:not(.fx-slider-hide-last-tick) {
+      .fx-slider-wrapper::after {
+        opacity: 1;
+      }
+    }
+
+    &:not(.fx-slider-disabled) .fx-slider-ticks {
+      opacity: 1;
+    }
+  }
+}
+
+// Slider with thumb label.
+.fx-slider-thumb-label-showing {
+  .fx-slider-focus-ring {
+    display: none;
+  }
+
+  .fx-slider-thumb-label {
+    display: flex;
+  }
+}
+
+// Inverted slider.
+.fx-slider-axis-inverted {
+  .fx-slider-track-fill {
+    transform-origin: 100% 100%;
+  }
+
+  .fx-slider-track-background {
+    transform-origin: 0 0;
+  }
+}
+
+// Active slider.
+.fx-slider:not(.fx-slider-disabled) {
+  &.cdk-focused {
+    &.fx-slider-thumb-label-showing .fx-slider-thumb {
+      transform: scale(0);
+    }
+
+    .fx-slider-thumb-label {
+      border-radius: 50% 50% 0;
+    }
+
+    .fx-slider-thumb-label-text {
+      opacity: 1;
+    }
+  }
+
+  &.cdk-mouse-focused,
+  &.cdk-touch-focused,
+  &.cdk-program-focused {
+    .fx-slider-thumb {
+      border-width: $thumb-border-width-active;
+      transform: scale($thumb-focus-scale);
+    }
+  }
+}
+
+// Disabled slider.
+.fx-slider-disabled {
+  .fx-slider-focus-ring {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  .fx-slider-thumb {
+    border-width: $thumb-border-width-disabled;
+    transform: scale($thumb-disabled-scale);
+  }
+
+  .fx-slider-thumb-label {
+    display: none;
+  }
+}
+
+// Horizontal slider.
+.fx-slider-horizontal {
+  height: $thickness;
+  min-width: $min-size;
+
+  .fx-slider-wrapper {
+    height: $track-thickness;
+    top: ($thickness - $track-thickness) / 2;
+    left: $padding;
+    right: $padding;
+  }
+
+  .fx-slider-wrapper::after {
+    height: $track-thickness;
+    border-left-width: $tick-size;
+    right: 0;
+    top: 0;
+  }
+
+  .fx-slider-track-wrapper {
+    height: $track-thickness;
+    width: 100%;
+  }
+
+  .fx-slider-track-fill {
+    height: $track-thickness;
+    width: 100%;
+    transform: scaleX(0);
+  }
+
+  .fx-slider-track-background {
+    height: $track-thickness;
+    width: 100%;
+    transform: scaleX(1);
+  }
+
+  .fx-slider-ticks-container {
+    height: $track-thickness;
+    width: 100%;
+  }
+
+  .fx-slider-ticks {
+    height: $track-thickness;
+    width: 100%;
+  }
+
+  .fx-slider-thumb-container {
+    width: 100%;
+    height: 0;
+    top: 50%;
+  }
+
+  .fx-slider-focus-ring {
+    top: -$focus-ring-size / 2;
+    right: -$focus-ring-size / 2;
+  }
+
+  .fx-slider-thumb-label {
+    right: -$thumb-label-size / 2;
+    top: -($thumb-label-size + $thumb-arrow-gap);
+    transform: translateY($thumb-label-size / 2 + $thumb-arrow-gap) scale(0.01)
+      rotate(45deg);
+  }
+
+  .fx-slider-thumb-label-text {
+    transform: rotate(-45deg);
+  }
+
+  &.cdk-focused {
+    .fx-slider-thumb-label {
+      transform: rotate(45deg);
+    }
+  }
+}
+
+// Vertical slider.
+.fx-slider-vertical {
+  width: $thickness;
+  min-height: $min-size;
+
+  .fx-slider-wrapper {
+    width: $track-thickness;
+    top: $padding;
+    bottom: $padding;
+    left: ($thickness - $track-thickness) / 2;
+  }
+
+  .fx-slider-wrapper::after {
+    width: $track-thickness;
+    border-top-width: $tick-size;
+    bottom: 0;
+    left: 0;
+  }
+
+  .fx-slider-track-wrapper {
+    height: 100%;
+    width: $track-thickness;
+  }
+
+  .fx-slider-track-fill {
+    height: 100%;
+    width: $track-thickness;
+    transform: scaleY(0);
+  }
+
+  .fx-slider-track-background {
+    height: 100%;
+    width: $track-thickness;
+    transform: scaleY(1);
+  }
+
+  .fx-slider-ticks-container {
+    width: $track-thickness;
+    height: 100%;
+  }
+
+  .fx-slider-focus-ring {
+    bottom: -$focus-ring-size / 2;
+    left: -$focus-ring-size / 2;
+  }
+
+  .fx-slider-ticks {
+    width: $track-thickness;
+    height: 100%;
+  }
+
+  .fx-slider-thumb-container {
+    height: 100%;
+    width: 0;
+    left: 50%;
+  }
+
+  .fx-slider-thumb {
+    @include vendor-prefixes.backface-visibility(hidden);
+  }
+
+  .fx-slider-thumb-label {
+    bottom: -$thumb-label-size / 2;
+    left: -($thumb-label-size + $thumb-arrow-gap);
+    transform: translateX($thumb-label-size / 2 + $thumb-arrow-gap) scale(0.01)
+      rotate(-45deg);
+  }
+
+  .fx-slider-thumb-label-text {
+    transform: rotate(45deg);
+  }
+
+  &.cdk-focused {
+    .fx-slider-thumb-label {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+// Slider in RTL languages.
+[dir="rtl"] {
+  .fx-slider-wrapper::after {
+    left: 0;
+    right: auto;
+  }
+
+  .fx-slider-horizontal {
+    .fx-slider-track-fill {
+      transform-origin: 100% 100%;
+    }
+
+    .fx-slider-track-background {
+      transform-origin: 0 0;
+    }
+
+    &.fx-slider-axis-inverted {
+      .fx-slider-track-fill {
+        transform-origin: 0 0;
+      }
+
+      .fx-slider-track-background {
+        transform-origin: 100% 100%;
+      }
+    }
+  }
+}
+
+// Slider inside a component with disabled anifxions.
+.fx-slider._fx-anifxion-noopable {
+  .fx-slider-track-fill,
+  .fx-slider-track-background,
+  .fx-slider-ticks,
+  .fx-slider-thumb-container,
+  .fx-slider-focus-ring,
+  .fx-slider-thumb,
+  .fx-slider-thumb-label,
+  .fx-slider-thumb-label-text,
+  .fx-slider-has-ticks .fx-slider-wrapper::after {
+    transition: none;
+  }
+}
+
+.fx-slider-track-fill,
+.fx-slider-thumb,
+.fx-slider-thumb-label {
+  background-color: $PRIMARY;
+}
+
+.fx-slider-thumb-label-text {
+  color: $TEXT_92;
+}
+
+.fx-slider-focus-ring {
+  $opacity: 0.2;
+  $color: $PRIMARY;
+  background-color: $color;
+}
+
+.fx-slider-track-background {
+  background-color: $GREY_16;
+}
+
+.fx-slider:hover,
+.cdk-focused {
+  .fx-slider-track-background {
+    background-color: $GREY_08;
+  }
+}
+
+.fx-slider-disabled {
+  .fx-slider-track-background,
+  .fx-slider-track-fill,
+  .fx-slider-thumb {
+    background-color: $GREY_16;
+  }
+
+  &:hover {
+    .fx-slider-track-background {
+      background-color: $GREY_16;
+    }
+  }
+}
+
+.fx-slider-min-value {
+  .fx-slider-focus-ring {
+    $opacity: 0.12;
+    $color: $PRIMARY;
+    background-color: $color;
+  }
+
+  &.fx-slider-thumb-label-showing {
+    .fx-slider-thumb,
+    .fx-slider-thumb-label {
+      background-color: $PRIMARY;
+    }
+
+    &.cdk-focused {
+      .fx-slider-thumb,
+      .fx-slider-thumb-label {
+        background-color: $PRIMARY;
+      }
+    }
+  }
+
+  &:not(.fx-slider-thumb-label-showing) {
+    .fx-slider-thumb {
+      border-color: $PRIMARY;
+      background-color: transparent;
+    }
+
+    &:hover,
+    &.cdk-focused {
+      .fx-slider-thumb {
+        border-color: $PRIMARY;
+      }
+
+      &.fx-slider-disabled .fx-slider-thumb {
+        border-color: $GREY_16;
+      }
+    }
+  }
+}
+
+.fx-slider-has-ticks .fx-slider-wrapper::after {
+  border-color: $GREY_16;
+}
+
+.fx-slider-horizontal .fx-slider-ticks {
+  background-image: repeating-linear-gradient(
+    to right,
+    $GREY_16,
+    $GREY_16 3px,
+    transparent 0,
+    transparent
+  );
+  // Firefox doesn't draw the gradient correctly with 'to right'
+  // (see https://bugzilla.mozilla.org/show_bug.cgi?id=1314319).
+  background-image: -moz-repeating-linear-gradient(
+    0.0001deg,
+    $GREY_16,
+    $GREY_16 3px,
+    transparent 0,
+    transparent
+  );
+}
+
+.fx-slider-vertical .fx-slider-ticks {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    $GREY_16,
+    $GREY_16 3px,
+    transparent 0,
+    transparent
+  );
+}

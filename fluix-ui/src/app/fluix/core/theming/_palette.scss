@@ -1,0 +1,74 @@
+@use "sass:map";
+
+// @key Name
+// @value The opacity value over the background
+$theme-palette: (
+  default: 1,
+  darker: 0.92,
+  semi-dark: 0.87,
+  dark: 0.6,
+  disabled: 0.3,
+);
+
+$status-palette: (
+  default: 1,
+  foreground: 1,
+  background: 0.13,
+);
+
+// Text emphasis on
+// the surface color
+$text-on-surface: (
+  default: 0.87,
+  pure: 1,
+  high: 0.87,
+  medium: 0.6,
+  disabled: 0.38,
+);
+
+// Text emphasis on
+// the primary color
+$text-on-primary: (
+  default: 1,
+  high: 1,
+  medium: 0.74,
+  disabled: 0.38,
+);
+
+$theme-overlay: #000;
+$status-overlay: #fff;
+
+@function generate-generic-palette($palette-map, $color, $overlay: null) {
+  $palette: ();
+
+  @each $name, $opacity in $palette-map {
+    $mix: null;
+
+    @if ($overlay) {
+      $mix: mix($overlay, $color, $opacity);
+    } @else {
+      $mix: rgba($color, $opacity);
+    }
+
+    $palette: map.merge($palette, (#{$name}: $mix));
+  }
+
+  @return $palette;
+}
+
+@function generate-theme-palette($color, $overlay: $theme-overlay) {
+  // Overlaying the theme color with #000 or any other overlay
+  @return generate-generic-palette($theme-palette, $color, $overlay);
+}
+
+@function generate-status-palette($color) {
+  @return generate-generic-palette($status-palette, $color, $status-overlay);
+}
+
+@function generate-on-primary-palette($text-color) {
+  @return generate-generic-palette($text-on-primary, $text-color);
+}
+
+@function generate-on-surface-palette($text-color) {
+  @return generate-generic-palette($text-on-surface, $text-color);
+}

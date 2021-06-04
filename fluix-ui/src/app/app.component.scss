@@ -1,0 +1,10 @@
+@use "fluix/fluix-theme" as fluix;
+
+.example-card {
+  padding: 16px;
+  margin: 20px 0;
+
+  & > * {
+    margin-right: 20px;
+  }
+}
