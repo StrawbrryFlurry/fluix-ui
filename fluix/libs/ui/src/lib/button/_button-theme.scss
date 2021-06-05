@@ -51,9 +51,9 @@
       }
     }
 
-    //@include style-types.for-each-style-type-within() using ($type) {
-    //  @include ripples.apply-ripple-color($foreground);
-    //}
+    @include style-types.for-each-style-type-within() using ($type) {
+      @include ripples.apply-ripple-color($foreground);
+    }
   }
 }
 
