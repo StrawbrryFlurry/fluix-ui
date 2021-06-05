@@ -1,0 +1,58 @@
+$button-border-radius: 2px;
+$button-side-padding: 24px;
+$button-top-padding: 8px;
+$button-min-width: 4rem;
+
+$icon-border-radius: 50%;
+$icon-dimensions: 2rem;
+$fab-dimensions: 3rem;
+
+.fx-button,
+.fx-action-button,
+.fx-icon-button,
+.fx-fab-button {
+  position: relative;
+}
+
+.fx-icon-button,
+.fx-fab-button {
+  .fx-button-wrapper {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@mixin base() {
+  border-radius: $button-border-radius;
+  padding: $button-top-padding $button-side-padding;
+  outline: none;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin icon-button() {
+  @include base();
+
+  border-radius: $icon-border-radius;
+  width: $icon-dimensions;
+  height: $icon-dimensions;
+  padding: unset;
+  background-color: transparent;
+}
+
+@mixin fab-button() {
+  @include icon-button();
+
+  width: $fab-dimensions;
+  height: $fab-dimensions;
+}
+
+@mixin action-button() {
+  @include base();
+  background-color: transparent;
+}

@@ -1,0 +1,78 @@
+@use "sass:map";
+
+// @key Name
+// @value The opacity value over the background
+$theme-palette: (
+  default: 100%,
+  darker: 92%,
+  semi-dark: 87%,
+  dark: 60%,
+  disabled: 30%,
+);
+
+$status-palette: (
+  default: 100%,
+  foreground: 100%,
+  background: 13%,
+  disabled: 30%,
+);
+
+// Text emphasis on
+// the surface color
+$text-on-surface: (
+  default: 0.87,
+  pure: 1,
+  high: 0.87,
+  medium: 0.6,
+  disabled: 0.38,
+);
+
+// Text emphasis on
+// the primary color
+$text-on-primary: (
+  default: 1,
+  high: 1,
+  medium: 0.74,
+  disabled: 0.38,
+);
+
+$theme-overlay: #000;
+$status-overlay: #fff;
+
+@function generate-generic-palette($palette-map, $color, $overlay: null) {
+  $palette: ();
+  @each $name, $opacity in $palette-map {
+    $overlay: if(name == disabled, $theme-overlay, $overlay);
+    $mix: mix($color, $overlay, $opacity);
+    $palette: map.merge($palette, (#{$name}: $mix));
+  }
+
+  @return $palette;
+}
+
+@function generate-text-palette($palette-map, $color) {
+  $palette: ();
+
+  @each $name, $opacity in $palette-map {
+    $mix: rgba($color, $opacity);
+    $palette: map.merge($palette, (#{$name}: $mix));
+  }
+
+  @return $palette;
+}
+
+@function generate-theme-palette($color, $overlay: $theme-overlay) {
+  @return generate-generic-palette($theme-palette, $color, $overlay);
+}
+
+@function generate-status-palette($color) {
+  @return generate-generic-palette($status-palette, $color, $status-overlay);
+}
+
+@function generate-on-primary-palette($text-color) {
+  @return generate-text-palette($text-on-primary, $text-color);
+}
+
+@function generate-on-surface-palette($text-color) {
+  @return generate-text-palette($text-on-surface, $text-color);
+}

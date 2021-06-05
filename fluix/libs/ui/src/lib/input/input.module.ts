@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { FluixCommonModule } from '../common';
-import { FxButtonComponent } from './button.component';
+import { FluixInputDirective } from './input.component';
 
 @NgModule({
-  declarations: [FxButtonComponent],
-  exports: [FxButtonComponent, FluixCommonModule],
+  declarations: [FluixInputDirective],
   imports: [CommonModule, FluixCommonModule],
+  exports: [FluixInputDirective, FluixCommonModule],
 })
-export class FxButtonModule {}
+export class FluixInputModule {}

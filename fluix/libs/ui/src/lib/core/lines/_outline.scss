@@ -1,0 +1,10 @@
+$STROKES: (
+  "standard": 1px,
+  "hover": 2px,
+  "focus": 2px,
+  "disabled": 0.5px,
+);
+
+@function line-stroke($status) {
+  @return map-get($STROKES, $status);
+}

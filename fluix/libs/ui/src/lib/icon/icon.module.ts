@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { FluixCommonModule } from '../common';
-import { FxButtonComponent } from './button.component';
+import { FxIconComponent } from './icon.component';
 
 @NgModule({
-  declarations: [FxButtonComponent],
-  exports: [FxButtonComponent, FluixCommonModule],
+  declarations: [FxIconComponent],
+  exports: [FxIconComponent],
   imports: [CommonModule, FluixCommonModule],
 })
-export class FxButtonModule {}
+export class FxIconModule {}

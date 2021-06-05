@@ -1,0 +1,22 @@
+@use "fluix-theme" as fx;
+
+$fx-theme: fx.define-theme();
+
+@include fx.apply-theme($fx-theme);
+@include fx.apply-all-component-themes($fx-theme);
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: fx.$surface;
+}
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+}

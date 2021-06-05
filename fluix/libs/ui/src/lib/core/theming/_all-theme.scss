@@ -1,0 +1,11 @@
+@use "../../icon/icon-theme" as icon;
+@use "../../button/button-theme" as button;
+
+@mixin apply-all-component-themes($theme) {
+  @include icon.theme($theme);
+  @include button.theme($theme);
+}
+
+@mixin all-component-themes($theme) {
+  @include apply-all-component-themes($theme);
+}

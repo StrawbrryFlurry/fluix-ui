@@ -1,0 +1,117 @@
+@use 'sass:map';
+@use "../theming/theming";
+
+$font-family: "Inter", sans-serif !default;
+$font-weight-normal: 400 !default;
+$font-weight-semi-bold: 500 !default;
+
+@function define-typography-level(
+  $font-size,
+  $line-height: $font-size,
+  $font-weight: 400,
+  $letter-spacing: normal,
+  $font-family: $font-family
+) {
+  @return (
+    font-size: $font-size,
+    line-height: $line-height,
+    font-weight: $font-weight,
+    font-family: $font-family,
+    letter-spacing: $letter-spacing
+  );
+}
+
+@function define-typography(
+  $font-family: $font-family,
+  $headline: define-typography-level(24px, 24px, 400),
+  $title: define-typography-level(20px, 32px, 500, 0.15px),
+  $subtitle: define-typography-level(16px, 28px, 500, 0.15px),
+  $subtitle-bold: define-typography-level(14px, 24px, 500, 0.1px),
+  $body: define-typography-level(16px, 24px, 400, 0.5px),
+  $body-bold: define-typography-level(14px, 20px, 500, 0.25px),
+  $caption: define-typography-level(12px, 20px, 400, 0.4px),
+  $button: define-typography-level(14px, 20px, 500, 1.25px),
+  $input: define-typography-level(inherit, 1.125, 400)
+) {
+  $config: (
+    headline: $headline,
+    title: $title,
+    subtitle: $subtitle,
+    subtitle-bold: $subtitle-bold,
+    body: $body,
+    body-bold: $body-bold,
+    caption: $caption,
+    button: $button,
+    input: $input,
+  );
+
+  @return $config;
+}
+
+@mixin apply-typography-level-from-theme($theme, $level) {
+  $text-palettes: theming.get-text($theme);
+  $on-surface: theming.get-from-nested-palette($text-palettes, on-surface);
+
+  $typography: map.get($theme, typography);
+  $typography-level: map.get($typography, $level);
+
+  $font-family: map.get($typography-level, font-family);
+  $font-size: map.get($typography-level, font-size);
+  $line-height: map.get($typography-level, line-height);
+  $font-weight: map.get($typography-level, font-weight);
+  $letter-spacing: map.get($typography-level, letter-spacing);
+
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  font-family: $font-family;
+  letter-spacing: $letter-spacing;
+  color: $on-surface;
+}
+
+@mixin apply-typography-classes($theme, $selector: ".fx-theme") {
+  .fx-h1,
+  #{$selector} h1 {
+    @include apply-typography-level-from-theme($theme, headline);
+  }
+
+  .fx-h2,
+  #{$selector} h2 {
+    @include apply-typography-level-from-theme($theme, title);
+  }
+
+  .fx-h3,
+  #{$selector} h3 {
+    @include apply-typography-level-from-theme($theme, subtitle);
+  }
+
+  .fx-h4,
+  #{$selector} h4 {
+    @include apply-typography-level-from-theme($theme, subtitle-bold);
+  }
+
+  // These styles are currently unused
+  .fx-h5,
+  #{$selector} h5 {
+    @include apply-typography-level-from-theme($theme, body);
+  }
+
+  .fx-h6,
+  #{$selector} h6 {
+    @include apply-typography-level-from-theme($theme, body);
+  }
+
+  .fx-body,
+  #{$selector},
+  #{$selector} p {
+    @include apply-typography-level-from-theme($theme, body);
+  }
+
+  .fx-body-bold {
+    @include apply-typography-level-from-theme($theme, body-bold);
+  }
+
+  .fx-caption {
+    @include apply-typography-level-from-theme($theme, caption);
+  }
+}

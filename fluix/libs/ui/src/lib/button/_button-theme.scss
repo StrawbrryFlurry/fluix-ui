@@ -1,0 +1,89 @@
+@use "../core/theming/theming";
+@use "../core/typography/typography";
+@use "../core/style/ripples";
+@use "../core/style/style-types";
+@use "button-base";
+@use "sass:map";
+
+@mixin color($theme) {
+  $normal-colors: theming.get-type-color-map($theme);
+  $focus-colors: theming.get-type-color-map($theme, darker);
+  $disabled-colors: theming.get-type-color-map($theme, disabled);
+  $palettes: theming.get-color($theme);
+
+  @debug $palettes;
+
+  $foreground: theming.get-foreground-color($theme);
+
+  .fx-icon-button,
+  .fx-action-button {
+    @include style-types.for-each-style-type-within() using ($type) {
+      $color: map.get($normal-colors, $type);
+      $disabled: map.get($disabled-colors, $type);
+      color: $color;
+
+      .fx-icon {
+        color: $color;
+      }
+
+      &.fx-disabled {
+        color: $disabled;
+
+        .fx-icon {
+          color: $disabled;
+        }
+      }
+    }
+  }
+
+  .fx-button,
+  .fx-fab-button {
+    @include style-types.for-each-style-type-within() using ($type) {
+      $color: map.get($normal-colors, $type);
+      $color: if($type == basic, transparent, $color);
+
+      $disabled: map.get($disabled-colors, $type);
+
+      background-color: $color;
+
+      &.fx-disabled {
+        background-color: $disabled;
+      }
+    }
+
+    //@include style-types.for-each-style-type-within() using ($type) {
+    //  @include ripples.apply-ripple-color($foreground);
+    //}
+  }
+}
+
+@mixin typography($theme) {
+  .fx-button,
+  .fx-action-button {
+    @include typography.apply-typography-level-from-theme($theme, button);
+  }
+}
+
+@mixin style() {
+  .fx-button {
+    @include button-base.base();
+  }
+
+  .fx-icon-button {
+    @include button-base.icon-button();
+  }
+
+  .fx-fab-button {
+    @include button-base.fab-button();
+  }
+
+  .fx-action-button {
+    @include button-base.action-button();
+  }
+}
+
+@mixin theme($theme) {
+  @include style();
+  @include color($theme);
+  @include typography($theme);
+}

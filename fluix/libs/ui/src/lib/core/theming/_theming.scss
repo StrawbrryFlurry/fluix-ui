@@ -1,0 +1,91 @@
+// General tools to get theming information
+// from a theme config.
+@use "sass:map";
+
+@function get-config($theme) {
+  $palette: map.get($theme, palette);
+  $config: ();
+
+  @each $section, $section-config in $palette {
+    $config: map.merge($config, $section-config);
+  }
+
+  @return $config;
+}
+
+@function get-color($theme) {
+  $palette: map.get($theme, palette);
+  @return map.get($palette, color);
+}
+
+// Returns a map with the default
+// colors for each type e.g. fx-primary, fx-basic
+@function get-type-color-map($theme, $level: default) {
+  $palette: map.get($theme, palette);
+  $color-palettes: map.get($palette, color);
+  $text-palettes: map.get($palette, text);
+
+  $primary: get-from-nested-palette($color-palettes, primary, $level);
+  $accent: get-from-nested-palette($color-palettes, accent, $level);
+  $success: get-from-nested-palette($color-palettes, success, $level);
+  $warn: get-from-nested-palette($color-palettes, warn, $level);
+  $basic-level: if($level == default, high, $level);
+  $basic: get-from-nested-palette($text-palettes, on-surface, $basic-level);
+
+  @return (
+    primary: $primary,
+    accent: $accent,
+    success: $success,
+    warn: $warn,
+    basic: $basic
+  );
+}
+
+@function get-text($theme) {
+  $palette: map.get($theme, palette);
+  @return map.get($palette, text);
+}
+
+@function get-typography($theme) {
+  @return map.get($theme, typography);
+}
+
+@function get-typography-level($theme, $level) {
+  $typography: map.get($theme, typography);
+  @return map.get($typography, $level);
+}
+
+@function get-elevation($theme) {
+  $palette: map.get($theme, palette);
+  @return map.get($palette, elevation);
+}
+
+@function get-from-theme-palette(
+  $theme,
+  $palette-group,
+  $palette,
+  $level: default
+) {
+  $palettes: map.get($theme, palette);
+  $palette-group: map.get($palettes, $palette-group);
+  $palette-config: map.get($palette-group, $palette);
+
+  @return map.get($palette-config, $level);
+}
+
+@function get-from-nested-palette($palettes, $palette, $level: default) {
+  $palette-config: map.get($palettes, $palette);
+  @return map.get($palette-config, $level);
+}
+
+@function get-foreground-color($theme) {
+  @return get-from-theme-palette($theme, text, on-primary, high);
+}
+
+@function get-background-color($theme) {
+  @return get-from-theme-palette($theme, text, on-surface, high);
+}
+
+@function get-color-from-palette($palette, $level: default) {
+  @return map.get($palette, $level);
+}
