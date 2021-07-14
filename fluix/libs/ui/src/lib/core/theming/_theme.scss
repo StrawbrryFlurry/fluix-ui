@@ -2,11 +2,11 @@
 @use "palette";
 @use "elevation";
 @use "../typography/typography";
-@use "../style/ripples";
+@use "../../common/ripple/ripple.import";
 @use "../utils";
 
 $primary: #f00044 !default;
-$accent: #007df0 !default;
+$accent: #4169e1 !default;
 $warn: #d13438 !default;
 $success: #4caf50 !default;
 
@@ -28,9 +28,7 @@ $default-theme-config: (
     on-surface: $text-on-surface,
     on-primary: $text-on-primary,
   ),
-  elevation: (
-    surface: $surface,
-  ),
+  elevation: elevation.generate-elevation-levels($surface),
   palette: (
     color: (
       primary: palette.generate-theme-palette($primary),
@@ -42,7 +40,6 @@ $default-theme-config: (
       on-primary: palette.generate-on-primary-palette($text-on-primary),
       on-surface: palette.generate-on-surface-palette($text-on-surface),
     ),
-    elevation: elevation.generate-elevation-levels($surface),
   ),
   typography: $default-typography,
 );
@@ -99,9 +96,7 @@ $default-theme-config: (
       on-surface: $text-on-surface,
       on-primary: $text-on-primary,
     ),
-    elevation: (
-      surface: $surface-color,
-    ),
+    elevation: $background-elevation,
     palette: (
       color: (
         primary: $primary-palette,
@@ -113,7 +108,6 @@ $default-theme-config: (
         on-primary: $text-on-primary-palette,
         on-surface: $text-on-surface-palette,
       ),
-      elevation: $background-elevation,
     ),
     typography: $typography,
   );
@@ -125,5 +119,6 @@ $default-theme-config: (
   @include elevation.apply-background-elevation-classes($theme);
   @include elevation.apply-text-elevation-classes($theme);
   @include typography.apply-typography-classes($theme);
-  @include ripples.apply-theme($theme);
+  @include ripple.theme($theme);
+  @include ripple.ripple();
 }

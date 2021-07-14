@@ -3,3 +3,7 @@
 @function value-or-default($map, $key, $default) {
   @return if(map.has-key($map, $key), map.get($map, $key), $default);
 }
+
+@function to-string($number-or-string) {
+  @return #{$number-or-string};
+}

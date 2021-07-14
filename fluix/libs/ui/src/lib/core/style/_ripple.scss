@@ -1,0 +1,8 @@
+$ripple-color-opacity: 0.1;
+
+// Helper mixin to color the ripple element
+@mixin apply-ripple-color($color) {
+  .fx-ripple-element {
+    background-color: rgba($color, $ripple-color-opacity);
+  }
+}

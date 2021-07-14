@@ -1,0 +1,22 @@
+$step-margin: 4px;
+
+.fx-step {
+  margin-bottom: 36px;
+  grid-area: 1 / 1 / auto / 4;
+  margin-bottom: 20px;
+
+  .fx-step-status {
+  }
+
+  .fx-step-content {
+  }
+}
+
+// &:not(&.fx-step-finish) .fx-step-status::after {
+//   content: '';
+//   height: 32px;
+//   position: absolute;
+//   border-right-width: 1px;
+//   border-right-style: solid;
+//   border-radius: 4px;
+// }

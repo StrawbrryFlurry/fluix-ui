@@ -1,0 +1,20 @@
+@use "../core/theming/theming";
+@use "../core/theming/elevation";
+@use "../core/typography/typography";
+
+@mixin elevation($theme) {
+  .fx-card {
+    @include elevation.background-elevation($theme, 1);
+  }
+}
+
+@mixin typography($theme) {
+  .fx-card-body {
+    @include typography.apply-typography-level-from-theme($theme, caption);
+  }
+}
+
+@mixin theme($theme) {
+  @include typography($theme);
+  @include elevation($theme);
+}

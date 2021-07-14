@@ -1,0 +1,57 @@
+@use "../core/theming/theming";
+@use "../core/typography/typography";
+@use "sass:map";
+
+@mixin fill-white-icon-background {
+  &.fx-icon {
+    background-image: linear-gradient(#fff, #fff);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60% 50%;
+  }
+}
+
+@mixin color($theme) {
+  $highlighted-color: theming.get-from-theme-palette(
+    $theme,
+    text,
+    on-surface,
+    high
+  );
+
+  $light-gray: theming.get-elevation-level($theme, '9');
+  $palette: theming.get-type-color-map($theme);
+
+  .fx-step-status {
+    &::after {
+      border-right-color: $light-gray;
+    }
+  }
+
+  .fx-step-selected .fx-step-content {
+    font-weight: 600;
+    color: $highlighted-color;
+  }
+
+  .fx-step-open .fx-step-status .fx-icon {
+    color: $light-gray;
+  }
+
+  .fx-step-selected .fx-step-status .fx-icon {
+    color: map.get($palette, primary);
+  }
+
+  .fx-step-valid .fx-step-status .fx-icon {
+    color: map.get($palette, success);
+    @include fill-white-icon-background();
+  }
+
+  .fx-step-invalid .fx-step-status .fx-icon {
+    color: map.get($palette, warn);
+    @include fill-white-icon-background();
+  }
+}
+
+@mixin theme($theme) {
+  @include color($theme);
+}

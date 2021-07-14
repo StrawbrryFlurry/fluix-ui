@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'fluix';
+
+  c() {
+    console.log('s');
+  }
 }

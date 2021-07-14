@@ -1,18 +1,18 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
 
-export type FxStyleType = 'basic' | 'primary' | 'accent' | 'warn' | 'success';
+export type FxColorStyle = 'basic' | 'primary' | 'accent' | 'warn' | 'success';
 
-@Directive({ selector: 'fx-icon[type], button[type]' })
-export class FxTypeDirective<T extends HTMLElement>
+@Directive({ selector: 'fx-icon[color], button[color]' })
+export class FxColorDirective<T extends HTMLElement = any>
   implements OnInit, OnChanges {
   @Input()
-  get type() {
-    return this._type;
+  get color() {
+    return this._color;
   }
-  set type(type: FxStyleType) {
-    this._type = type;
+  set color(color: FxColorStyle) {
+    this._color = color;
   }
-  _type!: FxStyleType;
+  _color: FxColorStyle = 'basic';
 
   constructor(private readonly elementRef: ElementRef<T>) {}
 
@@ -20,7 +20,7 @@ export class FxTypeDirective<T extends HTMLElement>
   public setColorClass<T>(elementRef: ElementRef<T>): void;
   public setColorClass(elementRef?: ElementRef) {
     (elementRef ?? this.elementRef).nativeElement.classList.add(
-      `fx-${this._type}`
+      `fx-${this._color}`
     );
   }
 
@@ -30,6 +30,14 @@ export class FxTypeDirective<T extends HTMLElement>
    */
   public matchElementRef<T>(elementRef: ElementRef<T>) {
     return elementRef.nativeElement === elementRef.nativeElement;
+  }
+
+  hasFxColorStyle() {
+    return this.elementRef.nativeElement.hasAttribute('color');
+  }
+
+  hasColorAttribute(color: FxColorStyle) {
+    return this.elementRef.nativeElement.getAttribute('color') === color;
   }
 
   ngOnInit(): void {

@@ -1,1 +1,1 @@
-export * from './type.directive';
+export * from './color.directive';

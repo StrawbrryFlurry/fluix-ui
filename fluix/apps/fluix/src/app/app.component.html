@@ -1,51 +1,116 @@
-<div class="fx-theme fx-elevation-1">
-  <h1>Buttons</h1>
-  <div class="example-card fx-elevation-2">
-    <h2>Normal</h2>
-    <button fxButton type="primary">Primary</button>
-    <button fxButton type="accent">Accent</button>
-    <button fxButton type="basic">Basic</button>
-    <button fxButton type="warn">Warn</button>
-    <button fxButton type="success">Success</button>
-  </div>
-  <div class="example-card fx-elevation-2">
-    <h2>Action</h2>
-    <button fxActionButton type="primary">Primary</button>
-    <button fxActionButton type="accent">Accent</button>
-    <button fxActionButton type="basic">Basic</button>
-    <button fxActionButton type="warn">Warn</button>
-    <button fxActionButton type="success">Success</button>
-  </div>
-  <div class="example-card fx-elevation-2">
-    <h2>Icon</h2>
-    <button fxIconButton type="primary">
+<fx-card>
+  <fx-card-body>
+    <fx-stepper>
+      <fx-step state="selected"> Group Type </fx-step>
+      <fx-step state="invalid"> Members </fx-step>
+      <fx-step state="valid"> Owners </fx-step>
+      <fx-step state="open"> Settings </fx-step>
+    </fx-stepper>
+  </fx-card-body>
+</fx-card>
+<fx-card>
+  <fx-card-header>
+    <fx-card-title>Normal Button</fx-card-title>
+  </fx-card-header>
+  <fx-card-body>
+    <button fxButton color="primary">Primary</button>
+    <button fxButton color="accent">Accent</button>
+    <button fxButton color="basic">Basic</button>
+    <button fxButton color="warn">Warn</button>
+    <button fxButton color="success">Success</button>
+    <button disabled (click)="c()" fxButton>Disabled</button>
+  </fx-card-body>
+</fx-card>
+<br />
+<fx-card>
+  <fx-card-header>
+    <fx-card-title>Action Buttons</fx-card-title>
+  </fx-card-header>
+  <fx-card-body>
+    <button fxActionButton color="primary">Primary</button>
+    <button fxActionButton color="accent">Accent</button>
+    <button fxActionButton color="basic">Basic</button>
+    <button fxActionButton color="warn">Warn</button>
+    <button fxActionButton color="success">Success</button>
+  </fx-card-body>
+</fx-card>
+<br />
+<fx-card>
+  <fx-card-header>
+    <fx-card-title>Icon Buttons</fx-card-title>
+  </fx-card-header>
+  <fx-card-body>
+    <button fxIconButton color="primary">
       <fx-icon>more_vert</fx-icon>
     </button>
-    <button fxIconButton type="accent"><fx-icon>more_vert</fx-icon></button>
-    <button fxIconButton type="basic">
+    <button fxIconButton color="accent">
       <fx-icon>more_vert</fx-icon>
     </button>
-    <button fxIconButton type="warn"><fx-icon>more_vert</fx-icon></button>
-    <button fxIconButton type="success"><fx-icon>more_vert</fx-icon></button>
-  </div>
-  <div class="example-card fx-elevation-2">
-    <h2>FAB</h2>
-    <button fxFabButton type="primary"><fx-icon>more_vert</fx-icon></button>
-    <button fxFabButton type="accent">
+    <button fxIconButton color="basic">
       <fx-icon>more_vert</fx-icon>
     </button>
-    <button fxFabButton type="basic">
+    <button fxIconButton color="warn"><fx-icon>more_vert</fx-icon></button>
+    <button fxIconButton color="success"><fx-icon>more_vert</fx-icon></button>
+  </fx-card-body>
+</fx-card>
+<br />
+<fx-card>
+  <fx-card-header>
+    <fx-card-title>FAB</fx-card-title>
+  </fx-card-header>
+  <fx-card-body
+    ><button fxFabButton color="primary"><fx-icon>more_vert</fx-icon></button>
+    <button fxFabButton color="accent">
       <fx-icon>more_vert</fx-icon>
     </button>
-    <button fxFabButton type="warn"><fx-icon>more_vert</fx-icon></button>
-    <button fxFabButton type="success"><fx-icon>more_vert</fx-icon></button>
-  </div>
-  <h1>Icons</h1>
-  <div class="example-card fx-elevation-2">
-    <fx-icon [selectable]="true" type="primary">more_vert</fx-icon>
-    <fx-icon type="accent">more_vert</fx-icon>
-    <fx-icon type="basic">more_vert</fx-icon>
-    <fx-icon type="success">more_vert</fx-icon>
-    <fx-icon type="warn">more_vert</fx-icon>
-  </div>
-</div>
+    <button fx-fab-button color="basic">
+      <fx-icon>more_vert</fx-icon>
+    </button>
+    <button fxFabButton color="warn"><fx-icon>more_vert</fx-icon></button>
+    <button fxFabButton color="success"><fx-icon>more_vert</fx-icon></button>
+  </fx-card-body>
+</fx-card>
+<br />
+<fx-card>
+  <fx-card-header>
+    <fx-card-title>Test Card</fx-card-title>
+  </fx-card-header>
+  <fx-card-body>
+    <fx-icon [selectable]="true" color="primary">more_vert</fx-icon>
+    <fx-icon color="accent">more_vert</fx-icon>
+    <fx-icon color="basic">more_vert</fx-icon>
+    <fx-icon color="success">more_vert</fx-icon>
+    <fx-icon color="warn">more_vert</fx-icon>
+  </fx-card-body>
+  <br />
+</fx-card>
+<br />
+<fx-divider></fx-divider>
+<br />
+<fx-card style="max-width: 240px">
+  <fx-card-header>
+    <fx-card-title>Test Card</fx-card-title>
+    <fx-card-subtitle>What's up?</fx-card-subtitle>
+  </fx-card-header>
+  <fx-card-body>
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatum sunt,
+    accusamus ab reiciendis esse ipsum possimus laudantium natus rerum eligendi
+    et, magnam distinctio itaque voluptate! A expedita voluptatem vero incidunt.
+  </fx-card-body>
+  <fx-card-footer>
+    <button color="success" fxButton>Like</button>
+    <button color="warn" fxButton>Dislike</button>
+  </fx-card-footer>
+</fx-card>
+
+<br />
+<fx-card style="max-width: 240px">
+  <fx-card-body>
+    <button fxButton [fx-menu-trigger-for]="menu">Open Menu</button>
+    <fx-menu #menu>
+      <button fx-menu-item>Beep Boop</button>
+      <button [disabled]="true" fx-menu-item>Beep Boop</button>
+      <button color="primary" fx-menu-item>Beep Boop</button>
+    </fx-menu>
+  </fx-card-body>
+</fx-card>

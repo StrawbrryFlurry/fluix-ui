@@ -3,6 +3,7 @@
 $fx-theme: fx.define-theme();
 
 @include fx.apply-theme($fx-theme);
+
 @include fx.apply-all-component-themes($fx-theme);
 
 * {

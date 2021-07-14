@@ -1,0 +1,39 @@
+@use "../core/layout/layout-common";
+@use "../core/style/vendor-prefixes";
+
+$menu-item-top-padding: 8px;
+$menu-item-side-padding: 16px;
+$menu-border-radius: 2px;
+
+.fx-menu {
+  border-radius: $menu-border-radius;
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0px;
+
+  .fx-menu-item {
+    background-color: inherit;
+    outline: none;
+    border: none;
+    position: relative;
+    padding: $menu-item-top-padding $menu-item-side-padding;
+
+    .fx-menu-ripple {
+      @include layout-common.fill();
+    }
+
+    &:first-of-type {
+      border-top-left-radius: $menu-border-radius;
+      border-top-right-radius: $menu-border-radius;
+    }
+
+    &:last-of-type {
+      border-bottom-left-radius: $menu-border-radius;
+      border-bottom-right-radius: $menu-border-radius;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,27 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatRippleModule } from '@angular/material/core';
 
 import { FxFieldModule } from '../field/fx-field.module';
-import { FxTypeDirective } from './directives';
+import { FxColorDirective } from './directives/color.directive';
+import { FxRippleModule } from './ripple';
 
 @NgModule({
-  declarations: [FxTypeDirective],
+  declarations: [FxColorDirective],
   imports: [
     CommonModule,
     FxFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatRippleModule,
+    FxRippleModule,
   ],
   exports: [
     CommonModule,
     FxFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    FxTypeDirective,
-    MatRippleModule,
+    FxColorDirective,
+    FxRippleModule,
   ],
 })
-export class FluixCommonModule {}
+export class FxCommonModule {}

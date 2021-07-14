@@ -1,0 +1,16 @@
+@use "sass:map";
+@use "../../core/theming/theming";
+@use "../../core/style/style-types";
+@use "../../core/style/ripple";
+
+$selector-prefix: 'fx';
+
+/* Colors for the ripple elements.*/
+@mixin theme($theme) {
+  $colors: theming.get-type-color-map($theme);
+
+  @include style-types.for-each-style-type($selector-prefix) using ($type) {
+    $color: map.get($colors, $type);
+    @include ripple.apply-ripple-color($color);
+  }
+}

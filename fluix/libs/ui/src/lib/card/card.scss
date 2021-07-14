@@ -1,0 +1,43 @@
+$card-padding: 1rem;
+$border-radius: 2px;
+$card-space-margin: 0 0 0.5rem 0;
+
+.fx-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  padding: $card-padding;
+  border-radius: $border-radius;
+
+  .fx-card-header {
+    margin: $card-space-margin;
+
+    .fx-card-header-title {
+      display: flex;
+      flex-direction: column;
+
+      .fx-card-title {
+      }
+
+      .fx-card-subtitle {
+      }
+    }
+  }
+
+  .fx-card-body {
+    margin: $card-space-margin;
+  }
+
+  .fx-card-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    & > *:not(button:last-of-type) {
+      margin: 0 0.5rem 0 0;
+    }
+  }
+}

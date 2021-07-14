@@ -1,9 +1,6 @@
 @use "fluix-theme" as fluix;
 
-.example-card {
-  padding: 16px;
-  margin: 20px 0;
-
+.fx-card .fx-card-body {
   & > * {
     margin-right: 20px;
   }

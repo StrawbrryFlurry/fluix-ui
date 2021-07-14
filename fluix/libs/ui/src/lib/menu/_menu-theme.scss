@@ -1,0 +1,61 @@
+@use "../core/theming/theming";
+@use "../core/typography/typography";
+@use "../core/theming/elevation";
+@use "../core/style/style-types";
+@use "sass:map";
+
+@mixin color($theme) {
+  $foreground: theming.get-foreground-color($theme);
+  $normal-colors: theming.get-type-color-map($theme);
+  $disabled-colors: theming.get-type-color-map($theme, disabled);
+
+  .fx-menu {
+    .fx-menu-item {
+      @include style-types.for-each-style-type-within() using ($type) {
+        $color: map.get($normal-colors, $type);
+        $disabled: map.get($disabled-colors, $type);
+        color: $color;
+
+        .fx-icon {
+          color: $color;
+        }
+
+        &.fx-disabled {
+          color: $disabled;
+
+          .fx-icon {
+            color: $disabled;
+          }
+        }
+
+        &:focus-visible {
+          background-color: mix($color, transparent, 10);
+        }
+      }
+    }
+  }
+}
+
+@mixin typography($theme) {
+  .fx-menu {
+    .fx-menu-item {
+      @include typography.apply-typography-level-from-theme(
+        $theme,
+        caption,
+        true
+      );
+    }
+  }
+}
+
+@mixin elevation($theme) {
+  .fx-menu {
+    @include elevation.background-elevation($theme, 4);
+  }
+}
+
+@mixin theme($theme) {
+  @include elevation($theme);
+  @include color($theme);
+  @include typography($theme);
+}

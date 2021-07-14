@@ -1,6 +1,6 @@
 @use "../core/theming/theming";
 @use "../core/typography/typography";
-@use "../core/style/ripples";
+@use "../core/style/ripple";
 @use "../core/style/style-types";
 @use "button-base";
 @use "sass:map";
@@ -10,8 +10,6 @@
   $focus-colors: theming.get-type-color-map($theme, darker);
   $disabled-colors: theming.get-type-color-map($theme, disabled);
   $palettes: theming.get-color($theme);
-
-  @debug $palettes;
 
   $foreground: theming.get-foreground-color($theme);
 
@@ -33,6 +31,13 @@
           color: $disabled;
         }
       }
+
+      &:not(&.fx-disabled) {
+        &:focus-visible,
+        &:hover {
+          background-color: mix($color, transparent, 10);
+        }
+      }
     }
   }
 
@@ -49,10 +54,17 @@
       &.fx-disabled {
         background-color: $disabled;
       }
+
+      &:not(&.fx-disabled) {
+        &:focus-visible,
+        &:hover {
+          background-color: mix(#fff, $color, 10);
+        }
+      }
     }
 
     @include style-types.for-each-style-type-within() using ($type) {
-      @include ripples.apply-ripple-color($foreground);
+      @include ripple.apply-ripple-color($foreground);
     }
   }
 }

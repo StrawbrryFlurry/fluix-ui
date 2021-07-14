@@ -1,0 +1,16 @@
+@use "../core/theming/theming";
+
+$divider-color-opacity: 0.24;
+
+@mixin color($theme) {
+  $on-surface: theming.get-from-theme-palette($theme, text, on-surface, pure);
+  $divider-color: rgba($on-surface, $divider-color-opacity);
+
+  .fx-divider {
+    border-color: $divider-color;
+  }
+}
+
+@mixin theme($theme) {
+  @include color($theme);
+}

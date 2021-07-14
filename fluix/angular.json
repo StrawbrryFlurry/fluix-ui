@@ -36,7 +36,7 @@
       "projectType": "application",
       "root": "apps/fluix",
       "sourceRoot": "apps/fluix/src",
-      "prefix": "fluix",
+      "prefix": "fx",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

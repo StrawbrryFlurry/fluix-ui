@@ -1,9 +1,19 @@
 @use "../../icon/icon-theme" as icon;
 @use "../../button/button-theme" as button;
+@use "../../card/card-theme" as card;
+@use "../../divider/divider-theme" as divider;
+@use "../../menu/menu-theme.scss" as menu;
+@use "../../forms/forms.import" as forms;
 
 @mixin apply-all-component-themes($theme) {
   @include icon.theme($theme);
   @include button.theme($theme);
+  @include card.theme($theme);
+  @include divider.theme($theme);
+  @include menu.theme($theme);
+  @include forms.fx-step-theme($theme);
+  @include forms.fx-stepper-theme($theme);
+  @include forms.fx-wizard-theme($theme);
 }
 
 @mixin all-component-themes($theme) {

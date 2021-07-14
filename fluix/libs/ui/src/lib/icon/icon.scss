@@ -1,13 +1,9 @@
 @use "../core/style/vendor-prefixes";
 
-$size: 24px !default;
-
 // See https://developers.google.com/fonts/docs/material_icons#setup_method_2_self_hosting
 .fx-icon {
-  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
-  font-size: $size;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -15,9 +11,7 @@ $size: 24px !default;
   white-space: nowrap;
   word-wrap: normal;
   direction: ltr;
-  width: $size;
-  height: $size;
-  -webkit-font-feature-settings: "liga";
+  -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 
   pointer-events: none;

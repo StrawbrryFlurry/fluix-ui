@@ -1,9 +1,9 @@
 @use 'sass:map';
 @use "../theming/theming";
 
-$font-family: "Inter", sans-serif !default;
+$font-family: 'Inter', sans-serif !default;
 $font-weight-normal: 400 !default;
-$font-weight-semi-bold: 500 !default;
+$font-weight-semi-bold: 600 !default;
 
 @function define-typography-level(
   $font-size,
@@ -48,7 +48,11 @@ $font-weight-semi-bold: 500 !default;
   @return $config;
 }
 
-@mixin apply-typography-level-from-theme($theme, $level) {
+@mixin apply-typography-level-from-theme(
+  $theme,
+  $level: default,
+  $with-color: true
+) {
   $text-palettes: theming.get-text($theme);
   $on-surface: theming.get-from-nested-palette($text-palettes, on-surface);
 
@@ -66,52 +70,68 @@ $font-weight-semi-bold: 500 !default;
   font-weight: $font-weight;
   font-family: $font-family;
   letter-spacing: $letter-spacing;
-  color: $on-surface;
+
+  @if ($with-color) {
+    color: $on-surface;
+  }
 }
 
-@mixin apply-typography-classes($theme, $selector: ".fx-theme") {
+@mixin apply-typography-classes($theme, $selector: '.fx-theme') {
+  $text-palettes: theming.get-text($theme);
+  $on-surface: theming.get-from-nested-palette($text-palettes, on-surface);
+
   .fx-h1,
   #{$selector} h1 {
-    @include apply-typography-level-from-theme($theme, headline);
+    @include apply-typography-level-from-theme($theme, headline, false);
   }
 
   .fx-h2,
   #{$selector} h2 {
-    @include apply-typography-level-from-theme($theme, title);
+    @include apply-typography-level-from-theme($theme, title, false);
   }
 
   .fx-h3,
+  .fx-subtitle-bold,
   #{$selector} h3 {
-    @include apply-typography-level-from-theme($theme, subtitle);
+    @include apply-typography-level-from-theme($theme, subtitle, false);
   }
 
   .fx-h4,
+  .fx-subtitle-bold,
   #{$selector} h4 {
-    @include apply-typography-level-from-theme($theme, subtitle-bold);
-  }
-
-  // These styles are currently unused
-  .fx-h5,
-  #{$selector} h5 {
-    @include apply-typography-level-from-theme($theme, body);
-  }
-
-  .fx-h6,
-  #{$selector} h6 {
-    @include apply-typography-level-from-theme($theme, body);
+    @include apply-typography-level-from-theme($theme, subtitle-bold, false);
   }
 
   .fx-body,
   #{$selector},
   #{$selector} p {
-    @include apply-typography-level-from-theme($theme, body);
+    @include apply-typography-level-from-theme($theme, body, false);
   }
 
   .fx-body-bold {
-    @include apply-typography-level-from-theme($theme, body-bold);
+    @include apply-typography-level-from-theme($theme, body-bold, false);
   }
 
   .fx-caption {
-    @include apply-typography-level-from-theme($theme, caption);
+    @include apply-typography-level-from-theme($theme, caption, false);
+  }
+
+  .fx-bold .fx-caption {
+    font-weight: 700;
+  }
+
+  #{$selector} {
+    color: $on-surface;
+  }
+
+  // These styles are currently unused
+  .fx-h5,
+  #{$selector} h5 {
+    @include apply-typography-level-from-theme($theme, body, false);
+  }
+
+  .fx-h6,
+  #{$selector} h6 {
+    @include apply-typography-level-from-theme($theme, body, false);
   }
 }

@@ -56,8 +56,12 @@
 }
 
 @function get-elevation($theme) {
-  $palette: map.get($theme, palette);
-  @return map.get($palette, elevation);
+  @return map.get($theme, elevation);
+}
+
+@function get-elevation-level($theme, $level: default) {
+  $elevation: get-elevation($theme);
+  @return map.get($elevation, $level);
 }
 
 @function get-from-theme-palette(

@@ -1,0 +1,8 @@
+$divider-width: 1px;
+
+.fx-divider {
+  border-top-width: $divider-width;
+  border-top-style: solid;
+  display: block;
+  margin: 0 auto;
+}
