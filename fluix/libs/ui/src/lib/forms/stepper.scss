@@ -1,6 +1,18 @@
+$icon-size: 16px;
+
 .fx-stepper-container {
-  &::before {
-  }
-  &::after {
-  }
+  display: grid;
+  grid-template-columns: calc((#{$icon-size} / 2) - 1px) 2px minmax(0px, 1fr);
+
+  // &::before {
+  //   content: '';
+  //   display: block;
+  //   grid-area: 1 / 2 / 5 / auto;
+  //   background-color: rgb(255, 255, 255);
+  //   z-index: 0;
+  //   opacity: 1;
+  // }
+  //
+  // &::after {
+  // }
 }

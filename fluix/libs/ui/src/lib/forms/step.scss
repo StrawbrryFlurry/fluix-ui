@@ -2,13 +2,16 @@ $step-margin: 4px;
 
 .fx-step {
   margin-bottom: 36px;
-  grid-area: 1 / 1 / auto / 4;
-  margin-bottom: 20px;
+  display: grid;
 
   .fx-step-status {
   }
 
   .fx-step-content {
+  }
+
+  &:not(&.fx-step-finish) {
+    margin-bottom: 36px;
   }
 }
 
