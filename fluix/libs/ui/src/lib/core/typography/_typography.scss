@@ -23,15 +23,17 @@ $font-weight-semi-bold: 600 !default;
 
 @function define-typography(
   $font-family: $font-family,
-  $headline: define-typography-level(24px, 24px, 400),
-  $title: define-typography-level(20px, 32px, 500, 0.15px),
-  $subtitle: define-typography-level(16px, 28px, 500, 0.15px),
-  $subtitle-bold: define-typography-level(14px, 24px, 500, 0.1px),
-  $body: define-typography-level(16px, 24px, 400, 0.5px),
-  $body-bold: define-typography-level(14px, 20px, 500, 0.25px),
-  $caption: define-typography-level(12px, 20px, 400, 0.4px),
-  $button: define-typography-level(14px, 20px, 500, 1.25px),
-  $input: define-typography-level(inherit, 1.125, 400)
+  $headline: define-typography-level(24px, 24px, $font-weight-normal),
+  $title: define-typography-level(20px, 32px, $font-weight-semi-bold, 0.15px),
+  $subtitle: define-typography-level(16px, 28px, $font-weight-semi-bold, 0.15px),
+  $subtitle-bold:
+    define-typography-level(14px, 24px, $font-weight-semi-bold, 0.1px),
+  $body: define-typography-level(16px, 24px, $font-weight-normal, 0.5px),
+  $body-bold:
+    define-typography-level(14px, 20px, $font-weight-semi-bold, 0.25px),
+  $caption: define-typography-level(12px, 20px, $font-weight-normal, 0.4px),
+  $button: define-typography-level(14px, 20px, $font-weight-semi-bold, 1.25px),
+  $input: define-typography-level(inherit, 1.125, $font-weight-normal)
 ) {
   $config: (
     headline: $headline,
