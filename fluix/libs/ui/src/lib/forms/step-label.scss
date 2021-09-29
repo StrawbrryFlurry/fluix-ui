@@ -1,0 +1,22 @@
+$step-status-margin: 4px;
+
+.fx-step-label {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  background-color: inherit;
+
+  .fx-step-label-status {
+    display: flex;
+    align-items: center;
+    margin-right: $step-status-margin;
+  }
+
+  .fx-step-label-text {
+  }
+
+  &:not(&.fx-step-last) {
+    margin-bottom: 36px;
+  }
+}

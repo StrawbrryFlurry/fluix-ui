@@ -22,33 +22,31 @@
   $light-gray: theming.get-elevation-level($theme, '9');
   $palette: theming.get-type-color-map($theme);
 
-  .fx-step-status {
-    &::after {
-      border-right-color: $light-gray;
-    }
-  }
-
-  .fx-step-selected .fx-step-content {
+  .fx-step-label-selected .fx-step-label-content {
     font-weight: 600;
     color: $highlighted-color;
   }
 
-  .fx-step-open .fx-step-status .fx-icon {
+  .fx-step-label-open .fx-step-label-status .fx-icon {
     color: $light-gray;
   }
 
-  .fx-step-selected .fx-step-status .fx-icon {
+  .fx-step-label-selected .fx-step-label-status .fx-icon {
     color: map.get($palette, primary);
   }
 
-  .fx-step-valid .fx-step-status .fx-icon {
+  .fx-step-label-valid .fx-step-label-status .fx-icon {
     color: map.get($palette, success);
     @include fill-white-icon-background();
   }
 
-  .fx-step-invalid .fx-step-status .fx-icon {
+  .fx-step-label-invalid .fx-step-label-status .fx-icon {
     color: map.get($palette, warn);
     @include fill-white-icon-background();
+  }
+
+  .fx-step-label-separator {
+    display: block;
   }
 }
 

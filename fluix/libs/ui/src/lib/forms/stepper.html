@@ -1,0 +1,5 @@
+<ng-container *ngFor="let step of steps; index as idx">
+  <fx-step-label [step]="step"></fx-step-label>
+  <fx-step-label-separator [index]="idx"></fx-step-label-separator>
+</ng-container>
+<ng-content></ng-content>

@@ -1,3 +1,4 @@
-@forward "./step.theme.scss" as fx-step-*;
-@forward "./stepper.theme.scss" as fx-stepper-*;
-@forward "./wizard.theme.scss" as fx-wizard-*;
+@forward "./step-theme" as fx-step-*;
+@forward "./stepper-theme" as fx-stepper-*;
+@forward "./wizard-theme" as fx-wizard-*;
+@forward "./step-label-theme" as fx-step-label-*;

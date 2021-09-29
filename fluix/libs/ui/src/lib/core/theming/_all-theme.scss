@@ -12,6 +12,7 @@
   @include divider.theme($theme);
   @include menu.theme($theme);
   @include forms.fx-step-theme($theme);
+  @include forms.fx-step-label-theme($theme);
   @include forms.fx-stepper-theme($theme);
   @include forms.fx-wizard-theme($theme);
 }
